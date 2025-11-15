@@ -1,0 +1,56 @@
+import java.util.List;
+
+public class SuggestedQuestionGenerator {
+
+    // Generates a suggestion message to help the user improve their question.
+    // Behavior:
+    // - Loads all template rules from TemplateRules.
+    // - Each rule checks whether it applies to the current question and missing-info list.
+    // - Among all applicable rules, the one with the highest priority is selected.
+    // - Returns the message associated with that best rule.
+    // - If no rule applies, returns a generic fallback suggestion.
+    //
+    // Parameters:
+    //   question    - The raw text the user typed.
+    //   missingInfo - A list of missing-information labels detected by MissingInfoChecker.
+    //
+    // Returns:
+    //   A suggestion string that guides the user to clarify or improve their question.
+    public static String generateSuggestion(String question, List<String> missingInfo) {
+
+        // --- 1. Defensive programming: avoid null pointer issues ---
+        if (question == null) {
+            question = "";
+        }
+        question = question.toLowerCase().trim();
+
+        if (missingInfo == null) {
+            missingInfo = List.of();  // safe empty list
+        }
+
+        // --- 2. Load all defined template rules ---
+        List<TemplateRule> rules = TemplateRules.getRules();
+
+        // --- 3. Determine the best applicable rule (highest priority) ---
+        TemplateRule bestRule = null;
+
+        for (TemplateRule rule : rules) {
+            // Let the rule itself decide if it applies to this question
+            if (rule.applies(question, missingInfo)) {
+
+                // If this is the first applicable rule OR has a higher priority, update the best rule
+                if (bestRule == null || rule.getPriority() > bestRule.getPriority()) {
+                    bestRule = rule;
+                }
+            }
+        }
+
+        // --- 4. If a matching rule is found, return its message ---
+        if (bestRule != null) {
+            return bestRule.getMessage();
+        }
+
+        // --- 5. Fallback (should rarely happen because a fallback rule usually exists) ---
+        return "You can make your question clearer by providing more context, specific details, or clarifying what exactly you want to know.";
+    }
+}
