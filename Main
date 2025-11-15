@@ -1,0 +1,29 @@
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Please enter your problem：");
+        String question = scanner.nextLine();
+
+        System.out.println("What you just typed is：");
+        System.out.println(question);
+
+        List<String> missing = MissingInfoChecker.findMissingInfo(question);
+
+        // if there is only "ok" in the missing list, tell users his question is pretty clear.
+        if (missing.size() == 1 && missing.contains("OK")) {
+            System.out.println("Your question is pretty clear!");
+        } else {
+            // otherwise print the missing values.
+            System.out.println("Your question seems to be missing:");
+            for (String item : missing) {
+                System.out.println("- " + item);
+            }
+        }
+    }
+}
