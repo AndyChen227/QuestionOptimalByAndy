@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class MissingInfoChecker {
+
+    public static List<String> findMissingInfo(String question) {
+        if (question == null) {
+            question = "";
+        }
+        question = question.toLowerCase().trim();
+        List<String> missing = new ArrayList<>();
+
+        // 1. Lack objects (this / that / it)
+        if (question.contains("this") || question.contains("that") || question.contains("it")) {
+            missing.add("LACK_OBJECT");
+        }
+
+        // 2. Lack clear goals (help / how to / what should I do / fix / improve)
+        if (question.contains("help") || question.contains("fix") || question.contains("improve")
+                || question.contains("how to") || question.contains("what should i do")) {
+            missing.add("LACK_GOAL");
+        }
+
+        // 3. Lack specific details (some / a bit / a little)
+        if (question.contains("some") || question.contains("a bit") || question.contains("a little")
+                || question.contains("kind of")) {
+            missing.add("LACK_DETAILS");
+        }
+
+        // 4. Question is too short → likely missing context
+        if (question.length() < 10) {
+            missing.add("LACK_DETAILS");
+        }
+
+        // 5. If nothing is missing → question looks good
+        if (missing.isEmpty()) {
+            missing.add("OK");
+        }
+
+        return missing;
+    }
+}
