@@ -1,0 +1,28 @@
+public class ClarityChecker {
+
+    private static final String[] vagueWords = {
+            "this", "that", "it", "stuff", "something", "anything", "everything",
+            "good", "bad", "better", "worse", "ok", "nice", "fine", "right?", "wrong?",
+            "help", "fix", "do", "improve", "explain", "solve", "deal with", "handle",
+            "how to", "how do i", "what should i do", "what now", "what next",
+            "a bit", "some", "a little", "many", "few", "more", "less"
+    };
+
+    public static boolean isVague(String question) {
+        question = question.toLowerCase();
+
+        // If the sentence is, it always vague
+        if (question.length() < 5) {
+            return true;
+        }
+
+        // Check whether there is vague words
+        for (String w : vagueWords) {
+            if (question.contains(w)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
