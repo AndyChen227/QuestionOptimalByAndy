@@ -1,0 +1,31 @@
+import java.util.*;
+// This class is introduction to one rule
+public class TemplateRule {
+
+    private final int priority;
+    private final RuleChecker checker;
+    private final String message;
+
+    // Make sure every rules need to use the applies method
+    public interface RuleChecker {
+        boolean applies(String question, List<String> missingInfo);
+    }
+
+    public TemplateRule(int priority, RuleChecker checker, String message) {
+        this.priority = priority;
+        this.checker = checker;
+        this.message = message;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public boolean applies(String question, List<String> missingInfo) {
+        return checker.applies(question, missingInfo);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
