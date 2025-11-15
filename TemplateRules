@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class TemplateRules {
+
+    public static List<TemplateRule> getRules() {
+        List<TemplateRule> rules = new ArrayList<>();
+
+        // Cause RuleChecker has only one  method so it's a functional Interface
+        // We can use lambda
+        // 1. Lacking object：this / that / it
+        rules.add(new TemplateRule(
+                100,
+                (q, m) -> q.contains("this") || q.contains("that") || q.contains("it"),
+                "To make your question clearer, please specify what 'this/that/it' refers to, and describe the situation or item in more detail."
+        ));
+
+        // 2. Lacking target：help / how to / what should I do
+        rules.add(new TemplateRule(
+                90,
+                (q, m) -> q.contains("help") || q.contains("how to") || q.contains("what should i do"),
+                "Try describing your goal more clearly—what exact outcome or result would you like to achieve?"
+        ));
+
+        // 3. Missing details - based on the label given by the MissingInfoChecker method
+        rules.add(new TemplateRule(
+                60,
+                (q, m) -> m.contains("LACK_DETAILS"),
+                "Try providing more specific details, such as the exact condition, degree, amount, or what situation you're referring to."
+        ));
+
+        // 4. default rules
+        rules.add(new TemplateRule(
+                1,
+                (q, m) -> true,
+                "You can make your question clearer by providing more context, specific details, or clarifying what exactly you want to know."
+        ));
+
+        return rules;
+    }
+}
