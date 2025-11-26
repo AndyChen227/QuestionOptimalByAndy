@@ -22,8 +22,18 @@ public class Main {
             // otherwise print the missing values.
             System.out.println("Your question seems to be missing:");
             for (String item : missing) {
-                System.out.println("- " + item);
+                System.out.println("- " + MissingInfoTranslator.translate(item));
             }
+
+            // Display clarity score
+            int score = QuestionScoreCalculator.calculateScore(missing);
+            System.out.println();
+            System.out.println("Clarity Score: " + score + " / 100");
+
+            // Generate the most important suggestion
+            String suggestion = SuggestedQuestionGenerator.generateSuggestion(question, missing);
+            System.out.println("Most important suggestion:");
+            System.out.println("→ " + suggestion);
         }
     }
 }
