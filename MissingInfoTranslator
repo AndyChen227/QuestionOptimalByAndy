@@ -1,0 +1,35 @@
+public class MissingInfoTranslator {
+
+    // Converts internal labels into human-friendly descriptions
+    public static String translate(String label) {
+
+        return switch (label) {
+            case "LACK_OBJECT" ->
+                    "The specific object you are referring to (What does 'it/this/that' mean?)";
+
+            case "LACK_GOAL" ->
+                    "A clear goal (What result do you want to achieve?)";
+
+            case "LACK_DETAILS" ->
+                    "More specific details (amount, degree, exact situation)";
+
+            case "LACK_CONTEXT" ->
+                    "Background or context is missing (when, where, under what conditions)";
+
+            case "LACK_TIME" ->
+                    "Time information is missing (when did this happen?)";
+
+            case "LACK_LOCATION" ->
+                    "Location is not specified (where does this happen?)";
+
+            case "LACK_SUBJECT_DETAILS" ->
+                    "The subject is too vague (please specify exactly what you are referring to)";
+
+            case "OK" ->
+                    "Your question contains sufficient information";
+
+            default ->
+                    "Unknown issue";
+        };
+    }
+}
