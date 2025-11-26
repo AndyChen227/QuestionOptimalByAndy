@@ -1,0 +1,29 @@
+rt java.util.List;
+
+public class QuestionScoreCalculator {
+
+    // Calculate clarity score based on missing labels
+    public static int calculateScore(List<String> missingInfo) {
+
+        int score = 100;
+
+        for (String item : missingInfo) {
+            switch (item) {
+                case "LACK_OBJECT" -> score -= 25;
+                case "LACK_GOAL" -> score -= 25;
+                case "LACK_SUBJECT_DETAILS" -> score -= 20;
+                case "LACK_DETAILS" -> score -= 15;
+                case "LACK_CONTEXT" -> score -= 15;
+                case "LACK_TIME" -> score -= 10;
+                case "LACK_LOCATION" -> score -= 10;
+                case "OK" -> score = 100;
+            }
+        }
+
+        // Ensure score is between 0 and 100
+        if (score < 0) score = 0;
+        if (score > 100) score = 100;
+
+        return score;
+    }
+}
