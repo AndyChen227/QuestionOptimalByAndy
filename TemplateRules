@@ -22,14 +22,36 @@ public class TemplateRules {
                 "Try describing your goal more clearly—what exact outcome or result would you like to achieve?"
         ));
 
-        // 3. Missing details - based on the label given by the MissingInfoChecker method
+        // 3. Subject too vague
+        rules.add(new TemplateRule(
+                85,
+                (q, m) -> m.contains("LACK_SUBJECT_DETAILS"),
+                "The subject is too vague. Please specify what exactly you are referring to."
+        ));
+
+        // 4. Lack time information
+        rules.add(new TemplateRule(
+                70,
+                (q, m) -> m.contains("LACK_TIME"),
+                "Please specify when this happened or when the issue occurs."
+        ));
+
+
+        // 5. Lack location information
+        rules.add(new TemplateRule(
+                65,
+                (q, m) -> m.contains("LACK_LOCATION"),
+                "Please specify the location or environment related to this issue (e.g., where it happens)."
+        ));
+
+        // 6. Missing details - based on the label given by the MissingInfoChecker method
         rules.add(new TemplateRule(
                 60,
                 (q, m) -> m.contains("LACK_DETAILS"),
                 "Try providing more specific details, such as the exact condition, degree, amount, or what situation you're referring to."
         ));
 
-        // 4. default rules
+        // 7. default rules
         rules.add(new TemplateRule(
                 1,
                 (q, m) -> true,
